@@ -1,6 +1,7 @@
 import os
 import random
 import re
+import shutil
 import stat
 import subprocess
 import time
@@ -9,11 +10,16 @@ from datetime import timedelta, datetime
 import pandas as pd
 import psutil
 import regex
+from FastCopyFast import copytree
 from a_pandas_ex_bstcfg2df import get_bst_config_df
 from bstconnect import connect_to_all_localhost_devices
 from flatten_everything import flatten_everything
 from getdefgateway import get_default_gateway
-from getpathfromreg import get_bluestacks_config_file, get_hd_player_bluestacks
+from getpathfromreg import (
+    get_bluestacks_config_file,
+    get_hd_player_bluestacks,
+    get_bluestacks_user_folder,
+)
 from kthread_sleep import sleep
 from pdwinauto import get_automation_frame_from_pid
 from procobserver import observe_procs
@@ -962,6 +968,19 @@ class BlueStacksPatcher:
         sleeptime=0.1,
         timeoutstart=25,
     ):
+
+        bsta = get_bluestacks_user_folder()
+        bsta = os.path.normpath(os.path.join(bsta, "Engine", "UserData"))
+        fold2 = bsta + "2"
+        try:
+            shutil.rmtree(fold2)
+        except Exception as fe:
+            print(fe)
+        try:
+            copytree(bsta, fold2, ignore=None, symlinks=False)
+        except Exception:
+            shutil.copytree(bsta, fold2, dirs_exist_ok=True)
+
         oldinfo = self.get_device_information()
         if self.df.empty:
             self.connect_to_all_bluestacks_devices(timeout=3)
@@ -973,6 +992,16 @@ class BlueStacksPatcher:
             cmdlinerunningbst2,
         ) = self.get_all_running_bluestacks_instances()
         tostart = list(set(namerunningbst) - set(namerunningbst2))
+
+        try:
+            shutil.rmtree(bsta)
+        except Exception as fe:
+            print(fe)
+        try:
+            copytree(fold2, bsta, ignore=None, symlinks=False)
+        except Exception:
+            shutil.copytree(fold2, bsta, dirs_exist_ok=True)
+
         self.start_bluestacks_instances(
             instances=tostart,
             min_threads_open=min_threads_open,
@@ -980,7 +1009,7 @@ class BlueStacksPatcher:
             sleeptime=sleeptime,
             timeoutstart=timeoutstart,
         )
-        self.connect_to_all_bluestacks_devices(timeout=3)
+        self.connect_to_all_bluestacks_devices(timeout=5)
         newinfo = self.get_device_information()
         # self._patch_config_file(locale=locale, country=country, countrycode=countrycode)
         return oldinfo, newinfo
