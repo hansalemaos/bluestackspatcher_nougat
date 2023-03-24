@@ -20,10 +20,10 @@ a, b = bstackpatcher.get_new_imei_imsi(
     country="BR",
     countrycode="076",
     ignore=(),
-    min_threads_open=85,
+    min_threads_open=95,
     timeoutsearch=5,
-    sleeptime=0.1,
-    timeoutstart=25,
+    sleeptime=1,
+    timeoutstart=35,
 )
 print(a)
 print(b)
