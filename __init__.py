@@ -485,11 +485,11 @@ def update_bst_cfg(
                     + b'''"''',
                     line,
                 )
-                line = re.sub(
-                    rb"""device_custom_manufacturer=.*""",
-                    rb'''device_custom_manufacturer="''' + b"" + b'''"''',
-                    line,
-                )
+                # line = re.sub(
+                #     rb"""device_custom_manufacturer=.*""",
+                #     rb'''device_custom_manufacturer="''' + b"" + b'''"''',
+                #     line,
+                # )
 
             elif b"""device_custom_model=""" in line:
                 line = re.sub(
@@ -499,11 +499,11 @@ def update_bst_cfg(
                     + b'''"''',
                     line,
                 )
-                line = re.sub(
-                    rb"""device_custom_model=.*""",
-                    rb'''device_custom_model="''' + b"" + b'''"''',
-                    line,
-                )
+                # line = re.sub(
+                #     rb"""device_custom_model=.*""",
+                #     rb'''device_custom_model="''' + b"" + b'''"''',
+                #     line,
+                # )
 
             elif b"""device_profile_code=""" in line:
                 line = re.sub(
@@ -533,8 +533,8 @@ def update_bst_cfg(
                     line,
                 )
 
-            elif b"""launch_date=""" in line:
-                line = re.sub(rb"""launch_date=.*""", rb'''launch_date=""''', line)
+            # elif b"""launch_date=""" in line:
+            #     line = re.sub(rb"""launch_date=.*""", rb'''launch_date=""''', line)
 
             elif b"""session_id=""" in line:
                 line = re.sub(rb"""session_id=.*""", rb'''session_id="1"''', line)
@@ -552,8 +552,8 @@ def update_bst_cfg(
                     rb"""locale=.*""", rb'''locale="''' + locale + b'''"''', line
                 )
 
-            elif b"""log_levels=""" in line:
-                line = re.sub(rb"""log_levels=.*""", rb'''log_levels="*:I"''', line)
+            # elif b"""log_levels=""" in line:
+            #     line = re.sub(rb"""log_levels=.*""", rb'''log_levels="*:I"''', line)
 
             elif b"""machine_id=""" in line:
                 vax = str(uuid.uuid4()).encode()
@@ -570,8 +570,8 @@ def update_bst_cfg(
                     rb"""mute_all_instances=.*""", rb'''mute_all_instances="1"''', line
                 )
 
-            elif b"""next_vm_id=""" in line:
-                line = re.sub(rb"""next_vm_id=.*""", rb'''next_vm_id="1"''', line)
+            # elif b"""next_vm_id=""" in line:
+            #     line = re.sub(rb"""next_vm_id=.*""", rb'''next_vm_id="1"''', line)
 
             elif b"""shared_folders=""" in line:
                 line = re.sub(
@@ -583,13 +583,13 @@ def update_bst_cfg(
             # elif b"""hypervisor=""" in line:
             #     line = re.sub(rb"""hypervisor=.*""", rb'''hypervisor="hyperv"''', line)
 
-            elif b"""version_machine_id=""" in line:
-                vax = str(uuid.uuid4()).encode()
-                line = re.sub(
-                    rb"""version_machine_id=.*""",
-                    rb'''version_machine_id="''' + vax + b'''"''',
-                    line,
-                )
+            # elif b"""version_machine_id=""" in line:
+            #     vax = str(uuid.uuid4()).encode()
+            #     line = re.sub(
+            #         rb"""version_machine_id=.*""",
+            #         rb'''version_machine_id="''' + vax + b'''"''',
+            #         line,
+            #     )
             elif b"""first_boot=""" in line:
                 # vax = str(uuid.uuid4()).encode()
                 line = re.sub(
